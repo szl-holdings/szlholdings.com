@@ -1,0 +1,15 @@
+{
+  "schema": "szl.public-mirror/v1",
+  "source_repository": "szl-holdings/szl-org-health",
+  "source_visibility": "private",
+  "source_commit": "a2d221ae40c9fd0ab21f8821a7433e98b74d2ed0",
+  "mirrored_at": "2026-10-01T19:18:43Z",
+  "files": {
+    "pypi-packages.v1.json": "governance/pypi/pypi-packages.v1.json",
+    "release-path.md": "docs/PYPI_RELEASE_PATH.md",
+    "canonical/publish-pypi.yml": "governance/pypi/canonical/publish-pypi.yml",
+    "canonical/szl_pypi_release_gate.py": "governance/pypi/canonical/szl_pypi_release_gate.py",
+    "canonical/gen_publish_workflow.py": "governance/pypi/canonical/gen_publish_workflow.py"
+  },
+  "note": "Byte-identical copies of the PyPI governance artifacts so that public links resolve. The private repository remains the source of truth; the nightly audit there reads live PyPI and GitHub state."
+}
