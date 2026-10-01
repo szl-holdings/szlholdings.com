@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PyPI release path — SZL Holdings</title>
+<meta name="description" content="Public mirror of the SZL Holdings PyPI governance artifacts: package manifest, release contract, canonical publish workflow and release gate.">
+<link rel="canonical" href="https://szlholdings.com/pypi/">
+<style>html{background:#030F29;color:#f5f7fa;font:16px/1.6 ui-sans-serif,system-ui,sans-serif}body{margin:0}main{max-width:52rem;margin:0 auto;padding:2.5rem 1.25rem 3rem}h1{font-size:1.6rem;font-weight:600;margin:0 0 .5rem}p,li{color:#c9d2df}a{color:#8fd9d5;text-decoration:none}a:hover{text-decoration:underline}code{font:.9em ui-monospace,Menlo,Consolas,monospace;background:#1b222c;padding:.1em .35em;border-radius:4px;color:#f5f7fa}ul{padding-left:1.2rem}.k{color:#76859b;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin:2rem 0 .5rem}</style></head>
+<body><main>
+<p><a href="/">szlholdings.com</a> / pypi</p>
+<h1>PyPI release path</h1>
+<p>Every <code>szl-</code> package is published only by a GitHub Actions workflow in its source repository through PyPI Trusted Publishing, with PEP 740 attestations on every file. These are byte-identical public copies of the governance artifacts; the source of truth is the organization's health repository (private). <a href="MIRROR.json">MIRROR.json</a> records the source commit and the mirror time.</p>
+<div class="k">Artifacts</div>
+<ul>
+<li><a href="pypi-packages.v1.json">pypi-packages.v1.json</a> — manifest: every pyproject in the organization classified as published, queued, hold, internal or never; versions, release tags, attested source commits.</li>
+<li><a href="release-path.md">release-path.md</a> — the release contract (szl.pypi-release.v2): tag-to-version binding, environment and ruleset controls, gate checks, what a release does and does not prove.</li>
+<li><a href="canonical/publish-pypi.yml">canonical/publish-pypi.yml</a> — the canonical publish workflow (SHA-pinned actions; publishes only on <code>release: published</code>).</li>
+<li><a href="canonical/szl_pypi_release_gate.py">canonical/szl_pypi_release_gate.py</a> — the fail-closed release gate that runs before any upload.</li>
+<li><a href="canonical/gen_publish_workflow.py">canonical/gen_publish_workflow.py</a> — generator; only the package list differs between repositories.</li>
+</ul>
+<div class="k">Verify independently</div>
+<p>PyPI's Simple API exposes a <code>provenance</code> URL per file; the attestation certificate carries the source repository, the commit digest and the workflow run. The a11oy.net MEASURED RECORD reads those live and binds each release tag to its attested commit.</p>
+</main></body></html>
