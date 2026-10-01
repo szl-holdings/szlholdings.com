@@ -17,13 +17,23 @@ Company domain-of-record page for SZL Holdings, served by GitHub Pages from this
 
 Repository settings → Pages → custom domain `szlholdings.com`, then **Enforce HTTPS** once the certificate is issued.
 
+## /pypi/ public mirror
+
+`pypi/` holds byte-identical copies of the PyPI governance artifacts (manifest, release contract, canonical workflow,
+gate and generator) from the private `szl-holdings/szl-org-health` repository, plus `MIRROR.json` with the source
+commit. Refresh from a checkout that can read the source:
+
+```
+python3 tools/mirror_pypi_governance.py /path/to/szl-org-health
+```
+
 ## Refreshing the package table
 
 ```
 python3 tools/render_packages.py
 ```
 
-reads `governance/pypi/pypi-packages.v1.json` from `szl-holdings/szl-org-health` and rewrites the rows between the
+reads `pypi/pypi-packages.v1.json` (the mirror) and rewrites the rows between the
 `packages:start` / `packages:end` markers plus the read-date sentence. Commit the result through a pull request.
 
 ## Claims policy

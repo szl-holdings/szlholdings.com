@@ -2,13 +2,13 @@
 """Refresh the PyPI package table in index.html from the szl-org-health manifest.
 
 Usage:  python3 tools/render_packages.py [--manifest PATH_OR_URL]
-Reads governance/pypi/pypi-packages.v1.json (default: raw file on szl-org-health main),
+Reads the manifest (default: the public mirror at pypi/pypi-packages.v1.json; pass --manifest for another copy),
 rewrites the rows between <!-- packages:start --> and <!-- packages:end -->, and updates the
 "read ... on YYYY-MM-DD" date in the paragraph above the table. Standard library only.
 """
 import argparse, datetime, html, json, pathlib, re, sys, urllib.request
 
-DEFAULT = "https://raw.githubusercontent.com/szl-holdings/szl-org-health/main/governance/pypi/pypi-packages.v1.json"
+DEFAULT = str(pathlib.Path(__file__).resolve().parent.parent / "pypi" / "pypi-packages.v1.json")  # public mirror of szl-org-health governance/pypi
 
 def load(src):
     if src.startswith("http"):

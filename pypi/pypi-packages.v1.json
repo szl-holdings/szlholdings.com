@@ -1,0 +1,1316 @@
+{
+  "schema": "szl.pypi-packages.v1",
+  "generated_at": "2026-10-01T18:19:51Z",
+  "owner": {
+    "github_org": "szl-holdings",
+    "pypi_org_requested": "szl-holdings",
+    "pypi_org_url": "https://pypi.org/org/szl-holdings/",
+    "current_pypi_owner_account": "betterwithage",
+    "hugging_face_org": "https://huggingface.co/SZLHOLDINGS"
+  },
+  "release_path": {
+    "workflow": ".github/workflows/publish-pypi.yml",
+    "gate": ".github/scripts/szl_pypi_release_gate.py",
+    "canonical_version": "szl.pypi-release.v2",
+    "trigger": "GitHub Release published on tag v<version> (or <package>-v<version> in multi-package repos)",
+    "credential": "PyPI Trusted Publishing (GitHub OIDC) only; no API tokens",
+    "attestations": "PEP 740 via pypa/gh-action-pypi-publish",
+    "github_controls": [
+      "environment `pypi` restricted to tags v*",
+      "tag ruleset refs/tags/v* (create/update/delete: repository admins only)",
+      "branch protection on main"
+    ]
+  },
+  "counts": {
+    "published": 20,
+    "queued": 16,
+    "hold": 6,
+    "internal": 51,
+    "never": 11,
+    "third-party": 1
+  },
+  "packages": [
+    {
+      "name": "gdw-frontier",
+      "repo": "gdw-frontier",
+      "path": "pyproject.toml",
+      "status": "hold",
+      "reason": "owner decision: private repository; wheel also exposes generic top-level `app`",
+      "source": "https://github.com/szl-holdings/gdw-frontier"
+    },
+    {
+      "name": "nexus-dynamics",
+      "repo": "nexus",
+      "path": "python/pyproject.toml",
+      "status": "hold",
+      "reason": "owner decision: lab simulation engine binding; confirm intent to distribute",
+      "source": "https://github.com/szl-holdings/nexus"
+    },
+    {
+      "name": "szl-brand",
+      "repo": "szl-brand",
+      "path": "pyproject.toml",
+      "status": "hold",
+      "reason": "owner decision: brand assets (CC-BY-4.0, 14 MB sdist), not code \u2014 confirm PyPI is the right channel",
+      "source": "https://github.com/szl-holdings/szl-brand"
+    },
+    {
+      "name": "defensive-control-plane",
+      "repo": "szl-defensive-control-plane",
+      "path": "pyproject.toml",
+      "status": "hold",
+      "reason": "owner decision: private repository",
+      "source": "https://github.com/szl-holdings/szl-defensive-control-plane"
+    },
+    {
+      "name": "szl-forge-inference",
+      "repo": "szl-forge",
+      "path": "pyproject.toml",
+      "status": "hold",
+      "reason": "layout: wheel exposes generic top-level import names `inference` and `model_candidates`; move them under `szl_forge_inference/` before release",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "szl-second-brain",
+      "repo": "szl-second-brain",
+      "path": "pyproject.toml",
+      "status": "hold",
+      "reason": "layout: wheel ships a top-level `data` package; move it under `second_brain/data` (package-data) before release",
+      "source": "https://github.com/szl-holdings/szl-second-brain"
+    },
+    {
+      "name": "amaru",
+      "repo": "a11oy",
+      "path": "organs/amaru/sidecar/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/a11oy"
+    },
+    {
+      "name": "a11oy-council-kernel",
+      "repo": "a11oy",
+      "path": "packages/council-kernel/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/a11oy"
+    },
+    {
+      "name": "substrate-inference",
+      "repo": "platform",
+      "path": "apps/substrate-inference/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "a11oy-observability",
+      "repo": "platform",
+      "path": "packages/a11oy-observability/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-ayni-os",
+      "repo": "platform",
+      "path": "packages/ayni-os/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-edge-organs",
+      "repo": "platform",
+      "path": "packages/edge-organs/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-formula-os",
+      "repo": "platform",
+      "path": "packages/formula-os/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-hatun-mcp",
+      "repo": "platform",
+      "path": "packages/hatun-mcp/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-khipu-lmdb",
+      "repo": "platform",
+      "path": "packages/khipu-lmdb/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-khipu-os",
+      "repo": "platform",
+      "path": "packages/khipu-os/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-kipu-qillqaq",
+      "repo": "platform",
+      "path": "packages/kipu-qillqaq/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-live-wires",
+      "repo": "platform",
+      "path": "packages/live-wires/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-mobile-controls",
+      "repo": "platform",
+      "path": "packages/mobile-controls/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-puriq-os",
+      "repo": "platform",
+      "path": "packages/puriq-os/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-rosie-v3",
+      "repo": "platform",
+      "path": "packages/rosie-v3/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-graphql",
+      "repo": "platform",
+      "path": "packages/szl-graphql/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-logging",
+      "repo": "platform",
+      "path": "packages/szl-logging/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-pqc",
+      "repo": "platform",
+      "path": "packages/szl-pqc/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-qrng",
+      "repo": "platform",
+      "path": "packages/szl-qrng/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-throttle",
+      "repo": "platform",
+      "path": "packages/szl-throttle/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-unay",
+      "repo": "platform",
+      "path": "packages/unay/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "understudy-runtime",
+      "repo": "platform",
+      "path": "packages/understudy-runtime/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-wayra",
+      "repo": "platform",
+      "path": "packages/wayra/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-wire-d",
+      "repo": "platform",
+      "path": "packages/wire-d/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "repl-nix-workspace",
+      "repo": "platform",
+      "path": "pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "repl-nix-workspace",
+      "repo": "platform",
+      "path": "scripts/media/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "lyte-metrics-store",
+      "repo": "platform",
+      "path": "services/lyte-metrics-store/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "substrate-py-workers",
+      "repo": "platform",
+      "path": "services/substrate-py-workers/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "repl-nix-workspace",
+      "repo": "platform",
+      "path": "substrate/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/platform"
+    },
+    {
+      "name": "szl-energy-core",
+      "repo": "szl-energy-attest",
+      "path": "energy_core/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-energy-attest"
+    },
+    {
+      "name": "szl-estate-audit",
+      "repo": "szl-estate-os",
+      "path": "tools/szl_estate/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-estate-os"
+    },
+    {
+      "name": "szl-access-lab",
+      "repo": "szl-forge",
+      "path": "access-lab/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "szl-owned-agent-control",
+      "repo": "szl-forge",
+      "path": "agent-forge/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "szl-oac-clinical-gateway",
+      "repo": "szl-forge",
+      "path": "clinical-gateway/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "szl-forge-rlt-research",
+      "repo": "szl-forge",
+      "path": "frontier/rlt/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "szl-model-lab",
+      "repo": "szl-forge",
+      "path": "model-lab/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-forge"
+    },
+    {
+      "name": "khipu-x1",
+      "repo": "szl-khipu",
+      "path": "hardware/khipu-x1/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-khipu"
+    },
+    {
+      "name": "szl-alignment",
+      "repo": "szl-platform",
+      "path": "alignment/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "kids-sim",
+      "repo": "szl-platform",
+      "path": "packages/kids-sim/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-adversarial",
+      "repo": "szl-platform",
+      "path": "packages/szl-adversarial/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-beacon",
+      "repo": "szl-platform",
+      "path": "packages/szl-beacon/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-claims-api",
+      "repo": "szl-platform",
+      "path": "packages/szl-claims-api/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-estate",
+      "repo": "szl-platform",
+      "path": "packages/szl-estate/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-evidence-litellm",
+      "repo": "szl-platform",
+      "path": "packages/szl-evidence-litellm/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-iso42001",
+      "repo": "szl-platform",
+      "path": "packages/szl-iso42001/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-payload",
+      "repo": "szl-platform",
+      "path": "packages/szl-payload/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-receipts",
+      "repo": "szl-platform",
+      "path": "packages/szl-receipts/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-platform",
+      "repo": "szl-platform",
+      "path": "pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-platform"
+    },
+    {
+      "name": "szl-frontier-evidence-gateway",
+      "repo": "szl-safe-stack",
+      "path": "frontier-evidence-gateway/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-safe-stack"
+    },
+    {
+      "name": "safe-qa-service",
+      "repo": "szl-safe-stack",
+      "path": "safe-qa-service/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-safe-stack"
+    },
+    {
+      "name": "szl-v14",
+      "repo": "szl-v14",
+      "path": "szl-v14/pyproject.toml",
+      "status": "internal",
+      "reason": "monorepo-internal or duplicate source; PyPI rejects uploads carrying the Private classifier",
+      "source": "https://github.com/szl-holdings/szl-v14"
+    },
+    {
+      "name": "yarqa-attn",
+      "repo": "YARQA-ATTN",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/YARQA-ATTN"
+    },
+    {
+      "name": "ayllu",
+      "repo": "ayllu",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/ayllu"
+    },
+    {
+      "name": "puriq-live",
+      "repo": "puriq-live",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/puriq-live"
+    },
+    {
+      "name": "szl-block-kv",
+      "repo": "szl-block-kv",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-block-kv"
+    },
+    {
+      "name": "szl-blocked",
+      "repo": "szl-blocked",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-blocked"
+    },
+    {
+      "name": "szl-formulas",
+      "repo": "szl-formulas",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-formulas"
+    },
+    {
+      "name": "szl-govsign",
+      "repo": "szl-govsign",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-govsign"
+    },
+    {
+      "name": "szl-lambda-gate",
+      "repo": "szl-lambda-gate",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-lambda-gate"
+    },
+    {
+      "name": "szl-maskmod",
+      "repo": "szl-maskmod",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-maskmod"
+    },
+    {
+      "name": "szl-provctl",
+      "repo": "szl-provctl",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-provctl"
+    },
+    {
+      "name": "szl-receipt-attn",
+      "repo": "szl-receipt-attn",
+      "path": "pyproject.toml",
+      "status": "never",
+      "reason": "Hugging Face Kernel Hub / Space descriptor; the wheel would be empty",
+      "source": "https://github.com/szl-holdings/szl-receipt-attn"
+    },
+    {
+      "name": "khipu-x1",
+      "repo": "khipu-x1",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/khipu-x1/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "3e515cfc695a9ca45c0db1701f30af2b75245ec5",
+      "pypi_latest_source_ref": "refs/tags/v0.1.1",
+      "import_names": [
+        "khipu_x1"
+      ],
+      "source": "https://github.com/szl-holdings/khipu-x1"
+    },
+    {
+      "name": "szl-calibration",
+      "repo": "szl-calibration",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-calibration/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "214d8b4035ba4149dcae2830defed7a0223b30ee",
+      "pypi_latest_source_ref": "refs/tags/v0.1.1",
+      "import_names": [
+        "szl_calibration"
+      ],
+      "source": "https://github.com/szl-holdings/szl-calibration"
+    },
+    {
+      "name": "szl-ci-witness",
+      "repo": "szl-ci-witness",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-ci-witness/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "c2ac9fea1802974f5c78b8219b82dc9d820c100d",
+      "pypi_latest_source_ref": "refs/tags/v0.1.1",
+      "import_names": [
+        "szl_ci_witness"
+      ],
+      "source": "https://github.com/szl-holdings/szl-ci-witness"
+    },
+    {
+      "name": "szl-crosscheck",
+      "repo": "szl-crosscheck",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-crosscheck/",
+      "pypi_version": "0.3.1",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1"
+      ],
+      "pypi_latest_provenance": "d7cc6e0c7ffa58aefeef7e3e13b0a6cfb159b2ce",
+      "pypi_latest_source_ref": "refs/tags/v0.3.1",
+      "import_names": [
+        "szl_crosscheck"
+      ],
+      "source": "https://github.com/szl-holdings/szl-crosscheck"
+    },
+    {
+      "name": "szl-eclipse",
+      "repo": "szl-eclipse",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-eclipse/",
+      "pypi_version": "0.2.1",
+      "pypi_releases": [
+        "0.2.0",
+        "0.2.1"
+      ],
+      "pypi_latest_provenance": "ff6591a29f3e0aeae281da22ea45b6a820c7a7b4",
+      "pypi_latest_source_ref": "refs/tags/v0.2.1",
+      "import_names": [
+        "szl_eclipse"
+      ],
+      "source": "https://github.com/szl-holdings/szl-eclipse"
+    },
+    {
+      "name": "szl-energy-attest",
+      "repo": "szl-energy-attest",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-energy-attest/",
+      "pypi_version": "0.3.1",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1"
+      ],
+      "pypi_latest_provenance": "893d467d370b690c626966da7705acb702ba781f",
+      "pypi_latest_source_ref": "refs/tags/v0.3.1",
+      "import_names": [
+        "energy_meter_proxy",
+        "szl_energy_attest"
+      ],
+      "source": "https://github.com/szl-holdings/szl-energy-attest"
+    },
+    {
+      "name": "szl-engine-bench",
+      "repo": "szl-engine-bench",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-engine-bench/",
+      "pypi_version": "0.3.1",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1"
+      ],
+      "pypi_latest_provenance": "d79a1b5b251c4b53a12e43dce1a71227870f32f4",
+      "pypi_latest_source_ref": "refs/tags/v0.3.1",
+      "import_names": [
+        "benchmark_manifest",
+        "engine_bench"
+      ],
+      "source": "https://github.com/szl-holdings/szl-engine-bench"
+    },
+    {
+      "name": "szl-evidence-litellm",
+      "repo": "szl-evidence-litellm",
+      "path": "packages/szl-evidence-litellm/pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi-litellm",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "szl-evidence-litellm-v<version>",
+      "pypi_url": "https://pypi.org/project/szl-evidence-litellm/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "65a2f4f89f66e8abd5bd1db23d385e76725757a9",
+      "pypi_latest_source_ref": "refs/tags/szl-evidence-litellm-v0.1.1",
+      "import_names": [
+        "szl_evidence_litellm"
+      ],
+      "source": "https://github.com/szl-holdings/szl-evidence-litellm"
+    },
+    {
+      "name": "szl-receipts",
+      "repo": "szl-evidence-litellm",
+      "path": "packages/szl-receipts/pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "szl-receipts-v<version>",
+      "pypi_url": "https://pypi.org/project/szl-receipts/",
+      "pypi_version": "14.0.1",
+      "pypi_releases": [
+        "14.0.0",
+        "14.0.1"
+      ],
+      "pypi_latest_provenance": "65a2f4f89f66e8abd5bd1db23d385e76725757a9",
+      "pypi_latest_source_ref": "refs/tags/szl-receipts-v14.0.1",
+      "import_names": [
+        "szl_receipts"
+      ],
+      "source": "https://github.com/szl-holdings/szl-evidence-litellm"
+    },
+    {
+      "name": "szl-evidence-mandate",
+      "repo": "szl-evidence-mandate",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-evidence-mandate/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "4477f27c25f8d9c21429fa62116a8c48084ec7aa",
+      "pypi_latest_source_ref": "refs/tags/v0.1.1",
+      "import_names": [
+        "szl_evidence"
+      ],
+      "source": "https://github.com/szl-holdings/szl-evidence-mandate"
+    },
+    {
+      "name": "szl-guardrail-receipt",
+      "repo": "szl-guardrail-receipt",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-guardrail-receipt/",
+      "pypi_version": "0.1.2",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1",
+        "0.1.2"
+      ],
+      "pypi_latest_provenance": "340cafd3178e80ef6ebc5ba19f389f0ce4a3253f",
+      "pypi_latest_source_ref": "refs/tags/v0.1.2",
+      "import_names": [
+        "szl_guardrail_receipt"
+      ],
+      "source": "https://github.com/szl-holdings/szl-guardrail-receipt"
+    },
+    {
+      "name": "szl-invariants",
+      "repo": "szl-invariants",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-invariants/",
+      "pypi_version": "0.1.0",
+      "pypi_releases": [
+        "0.1.0"
+      ],
+      "pypi_latest_provenance": "07af476c6236b2329ec2594593f29b4f05f2f270",
+      "pypi_latest_source_ref": "refs/heads/main",
+      "import_names": [
+        "szl_invariants"
+      ],
+      "source": "https://github.com/szl-holdings/szl-invariants"
+    },
+    {
+      "name": "szl-nemo",
+      "repo": "szl-nemo",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-nemo/",
+      "pypi_version": "0.4.2",
+      "pypi_releases": [
+        "0.4.0",
+        "0.4.1",
+        "0.4.2"
+      ],
+      "pypi_latest_provenance": "8ac4a4fc0ae902ddb1731831e81fabcae7277112",
+      "pypi_latest_source_ref": "refs/tags/v0.4.2",
+      "import_names": [
+        "szl_nemo"
+      ],
+      "source": "https://github.com/szl-holdings/szl-nemo"
+    },
+    {
+      "name": "szl-openshell-receipts",
+      "repo": "szl-openshell-receipts",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-openshell-receipts/",
+      "pypi_version": "0.3.1",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1"
+      ],
+      "pypi_latest_provenance": "15606ba89e62619f63d47c3963109666cf31b41d",
+      "pypi_latest_source_ref": "refs/tags/v0.3.1",
+      "import_names": [
+        "szl_openshell_receipts"
+      ],
+      "source": "https://github.com/szl-holdings/szl-openshell-receipts",
+      "tag_exception": {
+        "tag": "v0.3.0",
+        "tag_commit": "31cef01f95cbdb862372be354818915b27c34fe4",
+        "attested_commit": "2ef765d575d81572b3774a0bc0a79cd7c43576a9",
+        "reason": "v0.3.0 was tagged on the version-bump commit before the publish workflow existed; PyPI 0.3.0 was published from the child commit whose only change is .github/workflows/publish-pypi.yml (package tree identical). Existing tag retained rather than moved."
+      }
+    },
+    {
+      "name": "szl-pin",
+      "repo": "szl-pin",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-pin/",
+      "pypi_version": "0.1.1",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1"
+      ],
+      "pypi_latest_provenance": "8cf6e455e6a8ad0b33c917c448d4943b3cf273b0",
+      "pypi_latest_source_ref": "refs/tags/v0.1.1",
+      "import_names": [
+        "szl_pin"
+      ],
+      "source": "https://github.com/szl-holdings/szl-pin"
+    },
+    {
+      "name": "szl-quant-bench",
+      "repo": "szl-quant-bench",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-quant-bench/",
+      "pypi_version": "0.2.1",
+      "pypi_releases": [
+        "0.2.0",
+        "0.2.1"
+      ],
+      "pypi_latest_provenance": "0cdf5f1de2a45930da8309f1c6727bf51562fafd",
+      "pypi_latest_source_ref": "refs/tags/v0.2.1",
+      "import_names": [
+        "szl_quant_bench"
+      ],
+      "source": "https://github.com/szl-holdings/szl-quant-bench"
+    },
+    {
+      "name": "szl-receipt-dsse",
+      "repo": "szl-receipt",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-receipt-dsse/",
+      "pypi_version": "0.3.2",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1",
+        "0.3.2"
+      ],
+      "pypi_latest_provenance": "e2e913874459e70b11341f162d38c0573a1e2ae6",
+      "pypi_latest_source_ref": "refs/tags/v0.3.2",
+      "import_names": [
+        "szl_receipt"
+      ],
+      "source": "https://github.com/szl-holdings/szl-receipt"
+    },
+    {
+      "name": "szl-retrieval-bench",
+      "repo": "szl-retrieval-bench",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-retrieval-bench/",
+      "pypi_version": "0.3.1",
+      "pypi_releases": [
+        "0.3.0",
+        "0.3.1"
+      ],
+      "pypi_latest_provenance": "fd7bdd79573a5045934e6d65cfaf86f619cdd15c",
+      "pypi_latest_source_ref": "refs/tags/v0.3.1",
+      "import_names": [
+        "szl_retrieval_bench"
+      ],
+      "source": "https://github.com/szl-holdings/szl-retrieval-bench"
+    },
+    {
+      "name": "szl-triage",
+      "repo": "szl-typesafe-triage",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/szl-triage/",
+      "pypi_version": "0.5.2",
+      "pypi_releases": [
+        "0.5.1",
+        "0.5.2"
+      ],
+      "pypi_latest_provenance": "dd5f7be4bd5dc55168e9e8a45bc84de7aa078c74",
+      "pypi_latest_source_ref": "refs/tags/v0.5.2",
+      "import_names": [
+        "szl_decide",
+        "szl_triage"
+      ],
+      "source": "https://github.com/szl-holdings/szl-typesafe-triage"
+    },
+    {
+      "name": "vsp-otel",
+      "repo": "vsp-otel",
+      "path": "pyproject.toml",
+      "status": "published",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": "https://pypi.org/project/vsp-otel/",
+      "pypi_version": "0.1.2",
+      "pypi_releases": [
+        "0.1.0",
+        "0.1.1",
+        "0.1.2"
+      ],
+      "pypi_latest_provenance": "257b8cc76bcc045feca94c273dd444261e4bd917",
+      "pypi_latest_source_ref": "refs/tags/v0.1.2",
+      "import_names": [
+        "vsp_otel"
+      ],
+      "source": "https://github.com/szl-holdings/vsp-otel"
+    },
+    {
+      "name": "a11oy-factory",
+      "repo": "a11oy-factory",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "a11oy_factory"
+      ],
+      "source": "https://github.com/szl-holdings/a11oy-factory"
+    },
+    {
+      "name": "khipu-consensus",
+      "repo": "khipu-consensus",
+      "path": "python/pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "khipu_consensus"
+      ],
+      "source": "https://github.com/szl-holdings/khipu-consensus"
+    },
+    {
+      "name": "szl-lyte-enterprise",
+      "repo": "lyte-services",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "lyte",
+        "lyte_api",
+        "lyte_engine"
+      ],
+      "source": "https://github.com/szl-holdings/lyte-services"
+    },
+    {
+      "name": "szl-frontier-control-plane",
+      "repo": "szl-frontier",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_frontier"
+      ],
+      "source": "https://github.com/szl-holdings/szl-frontier"
+    },
+    {
+      "name": "szl-kernels",
+      "repo": "szl-kernels",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_kernels"
+      ],
+      "source": "https://github.com/szl-holdings/szl-kernels"
+    },
+    {
+      "name": "szl-khipu",
+      "repo": "szl-khipu",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_khipu"
+      ],
+      "source": "https://github.com/szl-holdings/szl-khipu"
+    },
+    {
+      "name": "szl-mesh",
+      "repo": "szl-mesh",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "sovereign",
+        "szl_mesh"
+      ],
+      "source": "https://github.com/szl-holdings/szl-mesh"
+    },
+    {
+      "name": "szl-ouroboros",
+      "repo": "szl-ouroboros",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_ouroboros"
+      ],
+      "source": "https://github.com/szl-holdings/szl-ouroboros"
+    },
+    {
+      "name": "szl-re",
+      "repo": "szl-real-estate",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_re"
+      ],
+      "source": "https://github.com/szl-holdings/szl-real-estate"
+    },
+    {
+      "name": "szl-router",
+      "repo": "szl-router",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "router_control",
+        "szl_router"
+      ],
+      "source": "https://github.com/szl-holdings/szl-router"
+    },
+    {
+      "name": "szl-serve",
+      "repo": "szl-serve",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_serve"
+      ],
+      "source": "https://github.com/szl-holdings/szl-serve"
+    },
+    {
+      "name": "szl-os",
+      "repo": "szl-sovereign-os",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_os"
+      ],
+      "source": "https://github.com/szl-holdings/szl-sovereign-os"
+    },
+    {
+      "name": "szl-substrate",
+      "repo": "szl-substrate",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_substrate"
+      ],
+      "source": "https://github.com/szl-holdings/szl-substrate"
+    },
+    {
+      "name": "szl-vertical-forge",
+      "repo": "szl-vertical-forge",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_vertical_forge"
+      ],
+      "source": "https://github.com/szl-holdings/szl-vertical-forge"
+    },
+    {
+      "name": "szl-wave1-report",
+      "repo": "szl-wave1-report",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "szl_wave1_report"
+      ],
+      "source": "https://github.com/szl-holdings/szl-wave1-report"
+    },
+    {
+      "name": "yarqa",
+      "repo": "yarqa",
+      "path": "pyproject.toml",
+      "status": "queued",
+      "github_environment": "pypi",
+      "workflow": ".github/workflows/publish-pypi.yml",
+      "tag_pattern": "v<version>",
+      "pypi_url": null,
+      "pypi_version": null,
+      "pypi_releases": null,
+      "pypi_latest_provenance": null,
+      "pypi_latest_source_ref": null,
+      "import_names": [
+        "yarqa"
+      ],
+      "source": "https://github.com/szl-holdings/yarqa"
+    },
+    {
+      "name": "ollm",
+      "repo": "platform",
+      "path": "apps/substrate-inference/engine/ollm/pyproject.toml",
+      "status": "third-party",
+      "reason": "vendored upstream project; name owned by its upstream maintainer on PyPI",
+      "source": "https://github.com/szl-holdings/platform"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-01T18:19:51Z",
+      "event": "release wave 2026-10-01: 19 packages re-released through szl.pypi-release.v2 (patch bump, Python classifiers, verified Source URL); szl-invariants held at 0.1.0 (hash-bound kernel sources)"
+    }
+  ]
+}
