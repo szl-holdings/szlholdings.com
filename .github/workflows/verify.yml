@@ -1,0 +1,45 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC: package-table drift + live-domain probe
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # actions/setup-python v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Structural checks (no third-party requests, CNAME, security.txt, table)
+        run: python3 tools/verify_site.py
+
+  drift-and-live:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # actions/setup-python v7.0.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Package table matches the szl-org-health manifest
+        run: python3 tools/render_packages.py --check
+      - name: https://szlholdings.com serves this page
+        run: |
+          set -euo pipefail
+          body="$(curl -fsSL --max-time 30 https://szlholdings.com/)"
+          grep -q "company domain of record" <<<"$body"
+          curl -fsSL --max-time 30 https://szlholdings.com/.well-known/security.txt | grep -q "Contact: mailto:stephen@szlholdings.com"
+          echo "live: page and security.txt served over HTTPS"

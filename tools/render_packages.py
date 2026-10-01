@@ -19,6 +19,7 @@ def load(src):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", default=DEFAULT)
+    ap.add_argument("--check", action="store_true", help="exit 2 if index.html would change (no write)")
     a = ap.parse_args()
     m = load(a.manifest)
     pub = sorted((p for p in m["packages"] if p.get("status") == "published"), key=lambda p: p["name"])
@@ -35,11 +36,14 @@ def main():
     t2 = re.sub(r"<!-- packages:start -->.*?<!-- packages:end -->",
                 "<!-- packages:start -->\n" + "\n".join(rows) + "\n<!-- packages:end -->", t, flags=re.S)
     today = datetime.date.today().isoformat()
-    t2 = re.sub(r"Simple APIs on \d{4}-\d{2}-\d{2}", f"Simple APIs on {today}", t2)
+    if not a.check:
+        t2 = re.sub(r"Simple APIs on \d{4}-\d{2}-\d{2}", f"Simple APIs on {today}", t2)
     t2 = re.sub(r"(Queued for first release through the same path: ).*?\.</p>",
                 lambda mm: mm.group(1) + html.escape(", ".join(p["name"] for p in queued)) + ".</p>", t2, flags=re.S)
     if t2 == t:
         print("index.html unchanged"); return 0
+    if a.check:
+        print("DRIFT: the package table or queued list no longer matches the manifest; run tools/render_packages.py"); return 2
     page.write_text(t2)
     print(f"index.html updated: {len(pub)} published, {len(queued)} queued, dated {today}")
     return 0
