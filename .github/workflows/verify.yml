@@ -12,7 +12,8 @@ permissions:
   contents: read
 
 jobs:
-  structure:
+  # Structural gate — may pass while apex DNS is still owner-blocked.
+  structural:
     runs-on: ubuntu-latest
     steps:
       # actions/checkout v7.0.1
@@ -24,7 +25,8 @@ jobs:
       - name: Structural checks (no third-party requests, CNAME, security.txt, table)
         run: python3 tools/verify_site.py
 
-  drift-and-live:
+  # Package-table drift vs szl-org-health manifest (schedule / dispatch only).
+  drift:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
@@ -36,9 +38,15 @@ jobs:
           python-version: "3.12"
       - name: Package table matches the szl-org-health manifest
         run: python3 tools/render_packages.py --check
-      # Live HTTPS is owner-DNS-bound. Apex A still points at Google (34.111.179.208)
-      # which answers HTTP but does not complete TLS. Pages is built; structural job
-      # stays required. Do not fake PASS — report MEASURED-failed and exit 0.
+
+  # Live HTTPS owner-action lane — MUST fail closed while TLS is dead.
+  # Do not soft-exit TLS EOF. DNS remains owner-blocked (apex A=34.111.179.208).
+  live:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: https://szlholdings.com serves this page
         id: live
         run: |
@@ -52,12 +60,12 @@ jobs:
           set -e
           if [ "$curl_rc" -ne 0 ]; then
             err="$(tr -cd '[:print:]\n' </tmp/szl-live-curl.err | head -c 400)"
-            echo "::warning title=LIVE_TLS_MEASURED_FAILED::curl exit ${curl_rc}: ${err}"
             if echo "$err" | grep -Eiq 'unexpected eof|ssl routines|tls connect|SSL_ERROR|certificate'; then
-              echo "state=LIVE_TLS_MEASURED_FAILED" >> "$GITHUB_OUTPUT"
-              echo "live: MEASURED-failed TLS (DNS still not on GitHub Pages). Owner click: ${DNS_SHEET}"
+              echo "state=LIVE_TLS_FAILED" >> "$GITHUB_OUTPUT"
+              echo "::error title=LIVE_TLS_FAILED::curl exit ${curl_rc}: ${err}"
+              echo "live: HARD-FAIL TLS (DNS still not on GitHub Pages). Owner click: ${DNS_SHEET}"
               echo "ACTION: point szlholdings.com A records to GitHub Pages 185.199.108-111.153"
-              exit 0
+              exit 1
             fi
             echo "state=LIVE_PROBE_FAILED" >> "$GITHUB_OUTPUT"
             echo "::error title=LIVE_PROBE_FAILED::Unexpected live probe failure (not a measured TLS EOF). ${err}"
