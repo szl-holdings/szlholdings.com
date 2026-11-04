@@ -36,30 +36,42 @@ jobs:
           python-version: "3.12"
       - name: Package table matches the szl-org-health manifest
         run: python3 tools/render_packages.py --check
-      - name: https://szlholdings.com serves this page (MEASURED)
+      # Live HTTPS is owner-DNS-bound. Apex A still points at Google (34.111.179.208)
+      # which answers HTTP but does not complete TLS. Pages is built; structural job
+      # stays required. Do not fake PASS — report MEASURED-failed and exit 0.
+      - name: https://szlholdings.com serves this page
         id: live
-        continue-on-error: true
         run: |
           set -uo pipefail
-          # MEASURED live probe. Apex DNS currently points off GitHub Pages
-          # (see ops DNS fix sheet). Do not invent a green TLS result.
+          DNS_SHEET="ops/rosa-paste/G-SZLHOLDINGS-COM-DNS-FIX-LATEST.md (house HQ) — replace apex A with GitHub Pages 185.199.108-111.153; CNAME www → szl-holdings.github.io"
+          apex_a="$(dig +short szlholdings.com A 2>/dev/null | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
+          echo "measured_dns_a=${apex_a:-UNAVAILABLE}"
           set +e
-          body="$(curl -fsSL --max-time 30 https://szlholdings.com/ 2>/tmp/szl-live.err)"
-          rc=$?
+          body="$(curl -fsSL --max-time 30 https://szlholdings.com/ 2>/tmp/szl-live-curl.err)"
+          curl_rc=$?
           set -e
-          if [ "$rc" -ne 0 ]; then
-            echo "MEASURED_LIVE=TLS_OR_DNS_FAIL rc=$rc"
-            cat /tmp/szl-live.err || true
-            echo "ACTION: point szlholdings.com A records to GitHub Pages 185.199.108-111.153"
+          if [ "$curl_rc" -ne 0 ]; then
+            err="$(tr -cd '[:print:]\n' </tmp/szl-live-curl.err | head -c 400)"
+            echo "::warning title=LIVE_TLS_MEASURED_FAILED::curl exit ${curl_rc}: ${err}"
+            if echo "$err" | grep -Eiq 'unexpected eof|ssl routines|tls connect|SSL_ERROR|certificate'; then
+              echo "state=LIVE_TLS_MEASURED_FAILED" >> "$GITHUB_OUTPUT"
+              echo "live: MEASURED-failed TLS (DNS still not on GitHub Pages). Owner click: ${DNS_SHEET}"
+              echo "ACTION: point szlholdings.com A records to GitHub Pages 185.199.108-111.153"
+              exit 0
+            fi
+            echo "state=LIVE_PROBE_FAILED" >> "$GITHUB_OUTPUT"
+            echo "::error title=LIVE_PROBE_FAILED::Unexpected live probe failure (not a measured TLS EOF). ${err}"
             exit 1
           fi
-          grep -q "company domain of record" <<<"$body"
-          curl -fsSL --max-time 30 https://szlholdings.com/.well-known/security.txt | grep -q "Contact: mailto:stephen@szlholdings.com"
-          echo "MEASURED_LIVE=OK"
-      - name: Record live probe outcome
-        run: |
-          if [ "${{ steps.live.outcome }}" = "success" ]; then
-            echo "live_probe=OK"
-          else
-            echo "live_probe=MEASURED_FAIL (DNS/TLS) — structural checks above remain authoritative until DNS fixed"
+          if ! grep -q "company domain of record" <<<"$body"; then
+            echo "state=LIVE_CONTENT_MISMATCH" >> "$GITHUB_OUTPUT"
+            echo "::error title=LIVE_CONTENT_MISMATCH::HTTPS answered but marker text missing"
+            exit 1
           fi
+          if ! curl -fsSL --max-time 30 https://szlholdings.com/.well-known/security.txt | grep -q "Contact: mailto:stephen@szlholdings.com"; then
+            echo "state=LIVE_SECURITY_TXT_MISMATCH" >> "$GITHUB_OUTPUT"
+            echo "::error title=LIVE_SECURITY_TXT_MISMATCH::security.txt contact missing over HTTPS"
+            exit 1
+          fi
+          echo "state=LIVE_HTTPS_OK" >> "$GITHUB_OUTPUT"
+          echo "live: page and security.txt served over HTTPS"
