@@ -6,7 +6,7 @@
 <body><main>
 <p><a href="/">szlholdings.com</a> / pypi</p>
 <h1>PyPI release path</h1>
-<p>Every <code>szl-</code> package is published only by a GitHub Actions workflow in its source repository through PyPI Trusted Publishing, with PEP 740 attestations on every file. These are byte-identical public copies of the governance artifacts; the source of truth is the organization's health repository (private). <a href="MIRROR.json">MIRROR.json</a> records the source commit and the mirror time.</p>
+<p>Every <code>szl-</code> package is published only by a GitHub Actions workflow in its source repository through PyPI Trusted Publishing, with PEP 740 attestations on every file. These are public copies of the governance artifacts: the manifest, workflow, gate and generator byte-for-byte, and the release contract with a provenance comment prepended. The source of truth is the organization's health repository (private). <a href="MIRROR.json">MIRROR.json</a> records the source commit and the mirror time.</p>
 <div class="k">Artifacts</div>
 <ul>
 <li><a href="pypi-packages.v1.json">pypi-packages.v1.json</a> — manifest: every pyproject in the organization classified as published, queued, hold, internal or never; versions, release tags, attested source commits.</li>

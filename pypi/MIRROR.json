@@ -11,5 +11,5 @@
     "canonical/szl_pypi_release_gate.py": "governance/pypi/canonical/szl_pypi_release_gate.py",
     "canonical/gen_publish_workflow.py": "governance/pypi/canonical/gen_publish_workflow.py"
   },
-  "note": "Byte-identical copies of the PyPI governance artifacts so that public links resolve. The private repository remains the source of truth; the nightly audit there reads live PyPI and GitHub state."
+  "note": "Copies of the PyPI governance artifacts so that public links resolve: byte-for-byte, except release-path.md, which has a provenance comment prepended. The private repository remains the source of truth; the nightly audit there reads live PyPI and GitHub state."
 }
