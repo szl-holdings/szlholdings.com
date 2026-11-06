@@ -1,0 +1,15 @@
+# GitHub Pages publishes this repository's root as-is (.nojekyll), so anything committed here is served on
+# https://szlholdings.com/. Keep local Python and editor by-products out of the tree.
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.DS_Store

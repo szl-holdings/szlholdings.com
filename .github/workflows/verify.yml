@@ -16,54 +16,53 @@ jobs:
   structural:
     runs-on: ubuntu-latest
     steps:
-      # actions/checkout v7.0.1
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      # actions/setup-python v7.0.0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
-      - name: Structural checks (no third-party requests, CNAME, security.txt, table)
+      - name: Structural checks (no third-party requests, local links, sitemap, CNAME, security.txt, table)
         run: python3 tools/verify_site.py
+      # Standard library only: nothing is installed, so there is nothing to hash-pin.
+      - name: Unit tests for the site tools
+        run: python3 -m unittest discover -s tests -v
 
-  # Package-table drift vs szl-org-health manifest (schedule / dispatch only).
+  # Package table vs the mirrored szl-org-health manifest (pypi/pypi-packages.v1.json). The unit tests assert the
+  # same on every push and pull request; this scheduled run re-asserts it for the record.
   drift:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      # actions/checkout v7.0.1
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      # actions/setup-python v7.0.0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
-      - name: Package table matches the szl-org-health manifest
+      - name: Package table matches the mirrored manifest (pypi/pypi-packages.v1.json)
         run: python3 tools/render_packages.py --check
 
-  # Live HTTPS owner-action lane — MUST fail closed while TLS is dead.
-  # Do not soft-exit TLS EOF. DNS remains owner-blocked (apex A=34.111.179.208).
+  # Live HTTPS owner-action lane — MUST fail closed until https://szlholdings.com/ serves this page.
+  # Do not soft-exit TLS EOF. As of 2026-11-06 the apex A record (Google Cloud DNS) still points at 34.111.179.208,
+  # not GitHub Pages; the fix is the owner's nameserver/DNS change described in README "DNS contract".
   live:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
-      # actions/checkout v7.0.1
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: https://szlholdings.com serves this page
         id: live
         run: |
-          set -uo pipefail
-          DNS_SHEET="ops/rosa-paste/G-SZLHOLDINGS-COM-DNS-FIX-LATEST.md (house HQ) — replace apex A with GitHub Pages 185.199.108-111.153; CNAME www → szl-holdings.github.io"
-          apex_a="$(dig +short szlholdings.com A 2>/dev/null | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
+          set -euo pipefail
+          DNS_SHEET="README.md 'DNS contract' — apex A/AAAA must be the GitHub Pages addresses 185.199.108-111.153 (DNS-only, not proxied); CNAME www → szl-holdings.github.io"
+          # Informational only (printed, never gates): a dig failure must not end the probe before the HTTPS check.
+          apex_a="$(dig +short szlholdings.com A 2>/dev/null | tr '\n' ' ' | sed 's/[[:space:]]*$//')" || apex_a=""
           echo "measured_dns_a=${apex_a:-UNAVAILABLE}"
-          set +e
-          body="$(curl -fsSL --max-time 30 https://szlholdings.com/ 2>/tmp/szl-live-curl.err)"
-          curl_rc=$?
-          set -e
+          curl_rc=0
+          body="$(curl -fsSL --max-time 30 https://szlholdings.com/ 2>/tmp/szl-live-curl.err)" || curl_rc=$?
           if [ "$curl_rc" -ne 0 ]; then
             err="$(tr -cd '[:print:]\n' </tmp/szl-live-curl.err | head -c 400)"
             if echo "$err" | grep -Eiq 'unexpected eof|ssl routines|tls connect|SSL_ERROR|certificate'; then
               echo "state=LIVE_TLS_FAILED" >> "$GITHUB_OUTPUT"
               echo "::error title=LIVE_TLS_FAILED::curl exit ${curl_rc}: ${err}"
-              echo "live: HARD-FAIL TLS (DNS still not on GitHub Pages). Owner click: ${DNS_SHEET}"
+              echo "live: HARD-FAIL TLS (DNS still not on GitHub Pages). Owner action: ${DNS_SHEET}"
               echo "ACTION: point szlholdings.com A records to GitHub Pages 185.199.108-111.153"
               exit 1
             fi
@@ -76,9 +75,11 @@ jobs:
             echo "::error title=LIVE_CONTENT_MISMATCH::HTTPS answered but marker text missing"
             exit 1
           fi
-          if ! curl -fsSL --max-time 30 https://szlholdings.com/.well-known/security.txt | grep -q "Contact: mailto:stephen@szlholdings.com"; then
+          sec_rc=0
+          sec="$(curl -fsSL --max-time 30 https://szlholdings.com/.well-known/security.txt 2>&1)" || sec_rc=$?
+          if [ "$sec_rc" -ne 0 ] || ! grep -q "Contact: mailto:stephen@szlholdings.com" <<<"$sec"; then
             echo "state=LIVE_SECURITY_TXT_MISMATCH" >> "$GITHUB_OUTPUT"
-            echo "::error title=LIVE_SECURITY_TXT_MISMATCH::security.txt contact missing over HTTPS"
+            echo "::error title=LIVE_SECURITY_TXT_MISMATCH::security.txt contact missing over HTTPS (curl exit ${sec_rc})"
             exit 1
           fi
           echo "state=LIVE_HTTPS_OK" >> "$GITHUB_OUTPUT"

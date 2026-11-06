@@ -1,3 +1,6 @@
+# This repository is a static site (GitHub Pages serves the repository root), not a Python distribution.
+# The [project] table exists so `pip install -e '.[test]'` gives the standard-library tools in tools/ a test
+# environment; it installs no packages. "Private :: Do Not Upload" makes PyPI reject any accidental upload.
 [build-system]
 requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
@@ -10,11 +13,24 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 authors = [{ name = "Stephen Lutar", email = "stephen@szlholdings.com" }]
+classifiers = [
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: WWW/HTTP :: Site Management",
+]
 dependencies = []
+
+[project.optional-dependencies]
+# The suite is plain unittest (CI runs `python3 -m unittest discover -s tests`); pytest is an optional runner.
+test = ["pytest>=8"]
 
 [project.urls]
 Homepage = "https://szlholdings.com"
-Repository = "https://github.com/szl-holdings/szlholdings.com"
+Source = "https://github.com/szl-holdings/szlholdings.com"
+Issues = "https://github.com/szl-holdings/szlholdings.com/issues"
 
 [tool.setuptools]
 packages = []
@@ -25,4 +41,5 @@ target-version = "py311"
 extend-exclude = ["build", "dist", ".venv", "node_modules"]
 
 [tool.pytest.ini_options]
-minversion = "7.0"
+minversion = "8.0"
+testpaths = ["tests"]

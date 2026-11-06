@@ -1,10 +1,7 @@
 cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
-title: szl-holdings/szlholdings.com — Company domain-of-record page for SZL Holdings, served by GitHub
-  Pages at
-version: 0.1.0
-date-released: '2026-11-05'
+title: szlholdings.com — company domain-of-record page for SZL Holdings
 license: Apache-2.0
 url: https://szlholdings.com
 repository-code: https://github.com/szl-holdings/szlholdings.com
