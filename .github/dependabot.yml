@@ -4,8 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
+  # pip is omitted on purpose. The Python in this repo is stdlib-only and
+  # there is no requirements.txt or pyproject.toml. A pip entry makes the
+  # Dependabot updater fail with "No files found in /".
