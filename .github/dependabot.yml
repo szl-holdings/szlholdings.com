@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  # pip is omitted on purpose. The Python in this repo is stdlib-only and
-  # there is no requirements.txt or pyproject.toml. A pip entry makes the
-  # Dependabot updater fail with "No files found in /".
+  # pip is omitted on purpose. The tools and tests are standard-library only.
+  # pyproject.toml (added 2026-11-06) declares no runtime dependencies: only a
+  # build requirement (setuptools>=77) and an optional test runner (pytest>=8),
+  # lower bounds that version updates would only churn. The former pip entry,
+  # with no manifest at all, failed with "No files found in /" (Dependabot
+  # runs 41977247689 and 42031095414) until #12 removed it.
