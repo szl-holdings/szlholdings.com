@@ -53,3 +53,9 @@ reads `pypi/pypi-packages.v1.json` (the mirror) and rewrites the rows between th
 
 Everything on the page is checkable: links resolve to the GitHub organization, the Hugging Face organization,
 PyPI project pages and the live product. Nothing here asserts a result that is not published elsewhere with evidence.
+
+Estate on Hugging Face: models, datasets and Spaces are published under the [SZLHOLDINGS](https://huggingface.co/SZLHOLDINGS) org.
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE).
