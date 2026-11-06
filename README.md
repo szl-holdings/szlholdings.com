@@ -86,9 +86,9 @@ python3 -m unittest discover -s tests -v   # tests for the three tools and repos
 With pytest instead: `python3 -m pip install -e '.[test]' && python3 -m pytest`. `pyproject.toml` describes no
 installable package; it only provides that test environment and is marked `Private :: Do Not Upload`.
 
-CI: `verify` runs the structural checks and the unit tests on every push and pull request (`structural`), and the
-drift check and the live HTTPS probe every Monday (`drift`, `live`). `CodeQL` analyses Python and the workflows through
-the organization's SHA-pinned reusable workflow.
+CI: `verify` runs the structural checks and the unit tests on every pull request and every push to `main`
+(`structural`), and the drift check and the live HTTPS probe on Mondays and on manual dispatch (`drift`, `live`).
+`CodeQL` analyses Python and the workflows through the organization's SHA-pinned reusable workflow.
 
 ## Claims policy and proof boundary
 
