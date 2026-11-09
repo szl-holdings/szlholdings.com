@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#04070d"/>
+<title>SZL Holdings — Trust is a receipt</title>
+<meta name="description" content="The evidence layer for agentic AI. Measured honesty, hash-chained receipts, fail-closed governance. Every claim on this page is a receipt."/>
+<style>
+:root{--bg:#04070d;--ink:#e8f0fa;--mut:#8fa3bd;--cy:#5ce8de;--gd:#f0cf6e;--rd:#ff7b93;--gr:#69e8a0}
+*{box-sizing:border-box}
+html,body{margin:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,#0a2230 0%,var(--bg) 60%);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:clamp(18px,5vw,64px)}
+h1{font-size:clamp(28px,6vw,56px);line-height:1.05;margin:.25em 0}
+h2{font-size:clamp(18px,3vw,26px);margin:1.8em 0 .5em}
+.k{font:600 11px/1.7 ui-monospace,monospace;letter-spacing:.24em;color:var(--gd)}
+.mut{color:var(--mut)}
+a{color:var(--cy)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:22px}
+.card{border:1px solid #1d2c44;background:linear-gradient(180deg,#0a1322,#070d18);border-radius:16px;padding:20px;box-shadow:0 18px 60px #0006}
+.stat{font-size:clamp(26px,4.5vw,42px);font-weight:800;background:linear-gradient(90deg,var(--cy),var(--gd));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+td,th{padding:8px;border-bottom:1px solid #16233a;text-align:left}
+th{color:var(--mut);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.pass{color:var(--gr);font-weight:700} .fail{color:var(--rd);font-weight:700}
+footer{margin-top:44px;border-top:1px solid #16233a;padding-top:16px;font-size:12px;color:var(--mut)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring{display:inline-block;width:14px;height:14px;border:2px solid var(--cy);border-top-color:transparent;border-radius:50%;animation:spin 1.2s linear infinite;vertical-align:-2px}
+</style>
+</head>
+<body>
+<main>
+  <p class="k">SZL HOLDINGS · szlholdings.si · THE EVIDENCE LAYER FOR AGENTIC AI</p>
+  <h1>Trust is not a promise.<br/>It's a receipt.</h1>
+  <p class="mut">We don't claim our AI is honest. We <b>measure</b> it, publish the measurement, and chain it by SHA-256. Every number on this page is served live from a public receipts dataset — and when the source is down, this page fails closed instead of showing you a cached claim.</p>
+
+  <div class="grid">
+    <div class="card"><div class="stat">6/6</div><div class="lbl">GPT-5.2 · measured abstain score (perfect)</div></div>
+    <div class="card"><div class="stat">3/6</div><div class="lbl">GPT-5.6 Sol · newest flagship fails the same battery</div></div>
+    <div class="card"><div class="stat">16×</div><div class="lbl">honesty gain from copy-constrained decoding (the floor is a decoding property)</div></div>
+    <div class="card"><div class="stat" id="rcount"><span class="ring"></span></div><div class="lbl">live receipts in the public chain</div></div>
+  </div>
+
+  <h2>The law we measured</h2>
+  <div class="card">
+    <table>
+      <tr><th>Finding</th><th>Evidence</th></tr>
+      <tr><td>The honesty floor is flat across 17× parameters (0.8B→14B)</td><td>scale sweep, receipted</td></tr>
+      <tr><td>SFT/DPO training doesn't move it</td><td>doctrine battery: keyword 4/6 vs strict ~1/6</td></tr>
+      <tr><td>It's a <b>decoding property</b> — constrained decoding moves it 16×</td><td>constrained decoding experiments</td></tr>
+      <tr><td>Failures are mostly semantic illusions, not confabulation (SI ≫ CF)</td><td>re-elicitation decomposition</td></tr>
+      <tr><td>Frontier alignment clears it — but not monotonically</td><td>Claude 5/6 · Qwen-35B 5/5 · <span class="pass">GPT-5.2 6/6</span> · <span class="fail">GPT-5.6 3/6</span></td></tr>
+    </table>
+  </div>
+
+  <h2>The cross-lab census — live</h2>
+  <div class="card"><table id="census"><tr><td class="mut"><span class="ring"></span> loading live census receipts…</td></tr></table></div>
+
+  <h2>What we run, receipted</h2>
+  <div class="grid">
+    <div class="card"><b>Khipu receipts</b><p class="mut">Hash-chained, ECDSA-P256-signed evidence on every decision. The tamper-evidence other trust products promise, made provable.</p></div>
+    <div class="card"><b>Fail-closed launch contract</b><p class="mut">40-hex immutable pins, disjoint holdouts, admission receipts, corpus floors. The answer to the 2026 distillation wars.</p></div>
+    <div class="card"><b>Energy attestation</b><p class="mut">NVML-measured joules per training hour, joined to public grid carbon. Joules per token, CO₂ per token — measured, not estimated.</p></div>
+    <div class="card"><b>Three-generation silicon sweep</b><p class="mut">Ampere · Ada · Blackwell under one pinned workload, energy-measured, hash-chained. <a href="https://huggingface.co/spaces/SZLHOLDINGS/szl-energy-hologram">Live hologram →</a></p></div>
+  </div>
+
+  <h2>The honest gaps</h2>
+  <div class="card"><p class="mut">We publish what's missing: x402 settlement is <b>UNSETTLED_UNTIL_PROVEN</b>. The energy publisher is shipped and pending measured production rows. The full deep-QMC run is staged on our GPU stack. No revenue claims until settlement receipts exist. <a href="/api/honest">The full contract →</a></p></div>
+
+  <footer>SZL Holdings · github.com/szl-holdings (source authority) · huggingface.co/SZLHOLDINGS (artifacts) · Always receipts: every claim carries a source, exact revision, test result, limitation, or settlement receipt. · <a href="/api/receipts">/api/receipts</a></footer>
+</main>
+<script>
+fetch("/api/receipts").then(r=>r.json()).then(d=>{
+  document.getElementById("rcount").textContent = d.count;
+}).catch(()=>{ document.getElementById("rcount").textContent = "503"; });
+fetch("/api/census").then(r=>r.json()).then(d=>{
+  const t = document.getElementById("census");
+  let rows = "<tr><th>Model</th><th>Abstain</th><th>Verdict</th></tr>";
+  for (const leg of d.legs||[]){
+    for (const r of leg.runs||[]){
+      rows += `<tr><td>${r.model}</td><td>${r.abstained}/${r.probes_valid||6}</td><td class="${r.verdict==='PASS'?'pass':'fail'}">${r.verdict}</td></tr>`;
+    }
+  }
+  t.innerHTML = rows;
+}).catch(()=>{ document.getElementById("census").innerHTML =
+  "<tr><td class='mut'>census source unreachable — failing closed, no cached claims served</td></tr>"; });
+</script>
+</body>
+</html>
