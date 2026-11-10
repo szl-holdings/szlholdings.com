@@ -30,11 +30,16 @@ def fetch_file(path, timeout=20):
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read())
 
-def safe(fallback):
+def safe(func):
     """Fail closed: if the receipts source is unreachable, say so — never fake."""
-    def wrap():
+    import functools
+
+    @functools.wraps(func)
+    def wrap(*args, **kwargs):
         try:
-            return f()
+            return func(*args, **kwargs)
+        except HTTPException:
+            raise  # deliberate 503s (e.g. "not yet published") pass through unchanged
         except Exception as e:
             raise HTTPException(status_code=503, detail={
                 "error": "receipts_source_unavailable",
@@ -62,7 +67,7 @@ def honest():
 
 @app.get("/api/census")
 def census():
-    @safe(None)
+    @safe
     def _():
         tree = hf_json(None)
         rows = []
@@ -76,7 +81,7 @@ def census():
 
 @app.get("/api/receipts")
 def receipts():
-    @safe(None)
+    @safe
     def _():
         tree = hf_json(None)
         rows = []
