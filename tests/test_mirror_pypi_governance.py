@@ -91,6 +91,17 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
             "# Release path\n\nfixture contract\n",
         )
 
+    def test_committed_public_mirror_blobs_have_exact_source_digest(self):
+        # CI must prove the *Git objects*, not only a Windows checkout whose
+        # core.autocrlf conversion could disguise a changed public artifact.
+        repo = pathlib.Path(__file__).resolve().parents[1]
+        meta = json.loads((repo / "pypi/MIRROR.json").read_text(encoding="utf-8"))
+        for dst, expected in sorted(meta["source_sha256"].items()):
+            raw = subprocess.check_output(
+                GIT + ["-C", str(repo), "show", f"HEAD:pypi/{dst}"]
+            )
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), expected, dst)
+
     def test_usage_error_without_source_path(self):
         r = self.run_tool("mirror_pypi_governance.py")
         self.assertEqual(r.returncode, 2)

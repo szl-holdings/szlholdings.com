@@ -1,0 +1,6 @@
+# Byte-for-byte copies of canonical szl-org-health governance Git blobs.
+# The source manifest contains CRLF in its committed object; automatic EOL
+# normalization would alter its SHA-256 and invalidate public provenance.
+# Do not apply platform checkout conversion to these copied source artifacts.
+pypi/pypi-packages.v1.json -text whitespace=cr-at-eol
+pypi/canonical/* -text
