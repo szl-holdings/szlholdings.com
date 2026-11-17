@@ -94,6 +94,32 @@ class VerifySiteTest(SiteCopyTestCase):
         self.assert_fails("pypi/MIRROR.json lists canonical/gen_publish_workflow.py but pypi/canonical/"
                           "gen_publish_workflow.py is missing")
 
+    def test_public_mirror_rejects_canonical_file_tampering(self):
+        file = self.site / "pypi" / "canonical" / "gen_publish_workflow.py"
+        file.write_bytes(file.read_bytes() + b"\n# altered since source approval\n")
+        self.assert_fails(
+            "pypi/MIRROR.json: source_sha256 mismatch for canonical/gen_publish_workflow.py"
+        )
+
+    def test_public_mirror_rejects_changed_public_projection(self):
+        # Even a syntactically valid published-only document cannot replace
+        # the source-bound projection without review.
+        file = self.site / "pypi" / "pypi-packages.v1.json"
+        data = file.read_bytes()
+        file.write_bytes(data.replace(b"41", b"42", 1))
+        self.assert_fails("pypi/MIRROR.json: public projection checksum mismatch")
+
+    def test_public_mirror_requires_all_digest_fields(self):
+        import json
+
+        file = self.site / "pypi" / "MIRROR.json"
+        record = json.loads(file.read_text(encoding="utf-8"))
+        record.pop("source_sha256", None)
+        record.pop("public_projection_sha256", None)
+        file.write_text(json.dumps(record), encoding="utf-8")
+        self.assert_fails("pypi/MIRROR.json: source_sha256 coverage invalid")
+        self.assert_fails("pypi/MIRROR.json: public projection checksum unavailable")
+
     def test_public_onboarding_distinguishes_evidence_states(self):
         home = self.read("index.html")
         investor = self.read("investors/index.html")

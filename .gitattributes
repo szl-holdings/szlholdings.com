@@ -1,0 +1,4 @@
+# Public projection and source-pinned release gate assets must retain their
+# committed byte identity across platforms (Windows core.autocrlf included).
+pypi/pypi-packages.v1.json -text
+pypi/canonical/* -text whitespace=cr-at-eol

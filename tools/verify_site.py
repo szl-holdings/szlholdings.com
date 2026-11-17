@@ -9,6 +9,7 @@ Checks the published tree as GitHub Pages serves it (repository root, .nojekyll)
 - the package table has unique rows (at least 20) and the marker text the live probe looks for.
 """
 import datetime
+import hashlib
 import html.parser
 import json
 import pathlib
@@ -159,6 +160,26 @@ def check_mirror(root, errors):
             errors.append(f"pypi/MIRROR.json lists {rel} but pypi/{rel} is missing")
     if not re.fullmatch(r"[0-9a-f]{40}", str(meta.get("source_commit", ""))):
         errors.append("pypi/MIRROR.json: source_commit is not a full git SHA")
+    # Three canonical source files are copied verbatim, whereas the public
+    # catalog is a deliberate published-only projection of private source.
+    expected = set(meta.get("files", {})) - {"release-path.md", "pypi-packages.v1.json"}
+    digests = meta.get("source_sha256")
+    if type(digests) is not dict or set(digests) != expected:
+        errors.append("pypi/MIRROR.json: source_sha256 coverage invalid")
+    else:
+        for rel in sorted(expected):
+            digest = digests[rel]
+            if type(digest) is not str or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+                errors.append(f"pypi/MIRROR.json: source_sha256 invalid for {rel}")
+            else:
+                path = root / "pypi" / rel
+                if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                    errors.append(f"pypi/MIRROR.json: source_sha256 mismatch for {rel}")
+    projection_sha = meta.get("public_projection_sha256")
+    if type(projection_sha) is not str or re.fullmatch(r"[0-9a-f]{64}", projection_sha) is None:
+        errors.append("pypi/MIRROR.json: public projection checksum unavailable")
+    elif hashlib.sha256((root / "pypi/pypi-packages.v1.json").read_bytes()).hexdigest() != projection_sha:
+        errors.append("pypi/MIRROR.json: public projection checksum mismatch")
     # A private canonical manifest must never be copied verbatim to a public Pages root.
     catalog = json.loads((root / "pypi/pypi-packages.v1.json").read_text(encoding="utf-8"))
     projection = catalog.get("public_projection")
