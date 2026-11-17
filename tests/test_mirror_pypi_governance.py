@@ -1,5 +1,6 @@
 """tools/mirror_pypi_governance.py: copies the governance artifacts byte-for-byte and records provenance."""
 import datetime
+import hashlib
 import json
 import pathlib
 import shutil
@@ -57,7 +58,12 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
         self.assertNotIn("unreleased", self.read("pypi/pypi-packages.v1.json"))
         self.assertEqual(projected["public_projection"]["source_commit"], sha)
         for dst, rel in SOURCES.items():
-            self.assertEqual((self.site / "pypi" / dst).read_bytes(), (src / rel).read_bytes(), dst)
+            # Source provenance is the immutable Git object, never a checkout
+            # that may have been transformed by platform EOL policy.
+            blob = subprocess.check_output(
+                GIT + ["-C", str(src), "show", f"{sha}:{rel}"]
+            )
+            self.assertEqual((self.site / "pypi" / dst).read_bytes(), blob, dst)
         release_path = self.read("pypi/release-path.md")
         header, body = release_path.split("\n\n", 1)
         self.assertTrue(header.startswith("<!-- Public mirror. Source of truth: szl-holdings/szl-org-health"))
@@ -65,6 +71,24 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
         self.assertEqual(body, "# Release path\n\nfixture contract\n")
         meta = json.loads(self.read("pypi/MIRROR.json"))
         self.assertEqual(meta["source_commit"], sha)
+        for dst, rel in SOURCES.items():
+            blob = subprocess.check_output(
+                GIT + ["-C", str(src), "show", f"{sha}:{rel}"]
+            )
+            self.assertEqual(meta["source_sha256"][dst], hashlib.sha256(blob).hexdigest())
+        public_bytes = (self.site / "pypi/pypi-packages.v1.json").read_bytes()
+        self.assertEqual(
+            meta["public_projection_sha256"],
+            hashlib.sha256(public_bytes).hexdigest(),
+        )
+        source_bytes = subprocess.check_output(
+            GIT + ["-C", str(src), "show",
+                   f"{sha}:governance/pypi/pypi-packages.v1.json"]
+        )
+        self.assertEqual(
+            projected["public_projection"]["source_manifest_sha256"],
+            hashlib.sha256(source_bytes).hexdigest(),
+        )
         self.assertIn("published packages only", meta["note"])
         self.assertEqual(meta["public_manifest_projection"], "szl.public-pypi-projection/v1")
         mirrored = datetime.datetime.strptime(meta["mirrored_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
@@ -72,6 +96,23 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
         self.assertLess(abs(datetime.datetime.now(datetime.timezone.utc) - mirrored), datetime.timedelta(minutes=10))
         for key in ("schema", "source_repository", "source_visibility", "files"):
             self.assertEqual(meta[key], before_meta[key], key)
+
+    def test_public_git_blobs_match_attested_mirror_digests(self):
+        repo = pathlib.Path(__file__).resolve().parents[1]
+        meta = json.loads((repo / "pypi/MIRROR.json").read_text(encoding="utf-8"))
+        for rel, expected in sorted(meta["source_sha256"].items()):
+            # The staged Git index is the exact tree published by GitHub CI;
+            # a transformed checkout cannot mask a different committed blob.
+            data = subprocess.check_output(
+                GIT + ["-C", str(repo), "show", f":pypi/{rel}"]
+            )
+            self.assertEqual(hashlib.sha256(data).hexdigest(), expected, rel)
+        public = subprocess.check_output(
+            GIT + ["-C", str(repo), "show", ":pypi/pypi-packages.v1.json"]
+        )
+        self.assertEqual(
+            hashlib.sha256(public).hexdigest(), meta["public_projection_sha256"]
+        )
 
     def test_usage_error_without_source_path(self):
         r = self.run_tool("mirror_pypi_governance.py")

@@ -1,4 +1,4 @@
-<!-- Public mirror. Source of truth: szl-holdings/szl-org-health docs/PYPI_RELEASE_PATH.md (private repository), commit 80944e1c526c0a9fd00bc8011b0cb9fe5c54cfba, mirrored 2026-11-17T19:55:43Z. Refresh with tools/mirror_pypi_governance.py from a checkout that can read the source repository. -->
+<!-- Public mirror. Source of truth: szl-holdings/szl-org-health docs/PYPI_RELEASE_PATH.md (private repository), commit 80944e1c526c0a9fd00bc8011b0cb9fe5c54cfba, mirrored 2026-11-17T20:07:35Z. Refresh with tools/mirror_pypi_governance.py from a checkout that can read the source repository. -->
 
 # PyPI release path — contract `szl.pypi-release.v2`
 

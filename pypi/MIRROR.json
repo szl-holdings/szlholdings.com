@@ -3,7 +3,7 @@
   "source_repository": "szl-holdings/szl-org-health",
   "source_visibility": "private",
   "source_commit": "80944e1c526c0a9fd00bc8011b0cb9fe5c54cfba",
-  "mirrored_at": "2026-11-17T19:55:43Z",
+  "mirrored_at": "2026-11-17T20:07:35Z",
   "files": {
     "pypi-packages.v1.json": "governance/pypi/pypi-packages.v1.json",
     "release-path.md": "docs/PYPI_RELEASE_PATH.md",
@@ -12,5 +12,11 @@
     "canonical/gen_publish_workflow.py": "governance/pypi/canonical/gen_publish_workflow.py"
   },
   "note": "Public manifest contains published packages only; held, internal, never, third-party and queued identities are omitted. Canonical workflow/gate/generator remain byte-for-byte mirrors; release-path.md is prefixed with provenance. Private canonical source remains authoritative.",
-  "public_manifest_projection": "szl.public-pypi-projection/v1"
+  "public_manifest_projection": "szl.public-pypi-projection/v1",
+  "source_sha256": {
+    "canonical/publish-pypi.yml": "385471214ab3b5b8fd7e6133d941c7746fd14e6aa4c6fa6804bbd22ddf88109b",
+    "canonical/szl_pypi_release_gate.py": "6a8e0846b73c917f422f155fa28b10abefb277f44d15b5e757e4f4780be735ad",
+    "canonical/gen_publish_workflow.py": "8ca20126c204c61738a2f3699281a1c5d56ee32779f5353e53f9bf1bac6eb56a"
+  },
+  "public_projection_sha256": "68f56945c0e211837517d559ef65466e88c22cbbc653d28e3119c32f6ffeffd4"
 }
