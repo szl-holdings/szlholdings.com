@@ -16,17 +16,17 @@
 Company domain-of-record page for SZL Holdings, served by GitHub Pages from the root of this repository.
 
 - Hostname: `szlholdings.com` (see `CNAME`); `www.szlholdings.com` redirects here once its CNAME exists.
-- Content: the home page (`index.html`), the [`/pypi/`](pypi/index.html) mirror page described below, `404.html`,
+- Content: the home page (`index.html`), public [investor](investors/index.html) and [developer](developers/index.html) diligence/onboarding pages, the [`/pypi/`](pypi/index.html) mirror page, `404.html`,
   `robots.txt`, `sitemap.xml` and `.well-known/security.txt`.
 - No build step at deploy time and no external requests (system fonts, inline CSS); the tools in `tools/` are
   standard-library Python. `.nojekyll` keeps `.well-known/` served.
 - Pages publishes the repository root as-is, so every tracked file is public. `.gitignore` keeps bytecode and build
   output out of the tree.
 
-## Status (2026-11-06): domain not yet on GitHub Pages
+## Status (rechecked 2026-11-17): domain not yet on GitHub Pages
 
 The Pages build deploys, but the apex `A` record at the current DNS host (Google Cloud DNS; registrar Squarespace
-Domains) points at `34.111.179.208`, not GitHub Pages, so `https://szlholdings.com/` does not serve this page. The
+Domains) points at `34.111.179.208`, not GitHub Pages, so `https://szlholdings.com/` does not serve this page. A bounded Windows readback on 2026-11-17 at 19:38 UTC returned that A record and a TLS handshake failure; this is a point-in-time observation, not continuous monitoring. The
 `live` job in `verify` (Mondays and on manual dispatch) fails closed until it does
 ([last run, 2026-11-04](https://github.com/szl-holdings/szlholdings.com/actions/runs/41861152725):
 `curl: (35) TLS connect error`).
