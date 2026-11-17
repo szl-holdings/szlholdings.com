@@ -78,7 +78,8 @@ class RenderPackagesTest(SiteCopyTestCase):
         self.assertIn("b-queued", queued.group(1).split(", "))
         self.assertNotIn("b-queued", names)
         verify = self.run_tool("verify_site.py")
-        self.assertEqual(verify.returncode, 0, verify.stdout + verify.stderr)
+        self.assertEqual(verify.returncode, 1, verify.stdout + verify.stderr)
+        self.assertIn("private or incomplete public projection", verify.stdout)
 
     def test_manifest_values_are_html_escaped(self):
         m = self.manifest()
