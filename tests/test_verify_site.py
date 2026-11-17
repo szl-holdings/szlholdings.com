@@ -15,7 +15,7 @@ class VerifySiteTest(SiteCopyTestCase):
     def test_committed_tree_passes(self):
         r = self.run_tool("verify_site.py")
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
-        self.assertTrue(r.stdout.startswith("OK index.html/404.html/pypi/index.html well-formed"), r.stdout)
+        self.assertTrue(r.stdout.startswith("OK index.html/404.html/pypi/index.html/investors/index.html/developers/index.html well-formed"), r.stdout)
         self.assertIn("CNAME=szlholdings.com", r.stdout)
 
     def test_external_stylesheet_rejected(self):
@@ -93,6 +93,29 @@ class VerifySiteTest(SiteCopyTestCase):
         (self.site / "pypi" / "canonical" / "gen_publish_workflow.py").unlink()
         self.assert_fails("pypi/MIRROR.json lists canonical/gen_publish_workflow.py but pypi/canonical/"
                           "gen_publish_workflow.py is missing")
+
+    def test_public_onboarding_distinguishes_evidence_states(self):
+        home = self.read("index.html")
+        investor = self.read("investors/index.html")
+        developer = self.read("developers/index.html")
+        self.assertIn('href="/investors/"', home)
+        self.assertIn('href="/developers/"', home)
+        self.assertIn("HTTP 402 alone is insufficient", investor)
+        self.assertIn("No revenue, users, model-quality uplift", investor)
+        for header in ("PAYMENT-REQUIRED", "PAYMENT-SIGNATURE", "PAYMENT-RESPONSE"):
+            self.assertIn(header, developer)
+
+    def test_investor_broken_local_link_rejected(self):
+        self.edit("investors/index.html", 'href="/developers/"', 'href="/not-a-page/"')
+        self.assert_fails("investors/index.html: broken local link '/not-a-page/'")
+
+    def test_developer_external_script_rejected(self):
+        self.edit("developers/index.html", "</head>", '<script src="https://cdn.example.com/a.js"></script></head>')
+        self.assert_fails("developers/index.html: external script/stylesheet reference")
+
+    def test_developer_unbalanced_markup_rejected(self):
+        self.edit("developers/index.html", "</main>", "")
+        self.assert_fails("developers/index.html: unbalanced </body>")
 
 
 if __name__ == "__main__":

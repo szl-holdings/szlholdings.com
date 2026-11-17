@@ -2,7 +2,7 @@
 """Structural checks for the szlholdings.com page. Standard library only; exit 1 on any failure.
 
 Checks the published tree as GitHub Pages serves it (repository root, .nojekyll):
-- index.html, 404.html and pypi/index.html are well-formed, declare lang="en" and load nothing from third parties;
+- index.html, 404.html, pypi/index.html, investors/index.html and developers/index.html are well-formed, declare lang="en" and load nothing from third parties;
 - every relative link on those pages, and every sitemap URL, resolves to a file in this repository;
 - the JSON-LD block on index.html parses;
 - CNAME, .nojekyll, security.txt (Contact, Expires more than 30 days out), robots.txt and pypi/MIRROR.json are sound;
@@ -18,7 +18,7 @@ import urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 HOST = "szlholdings.com"
-PAGES = ("index.html", "404.html", "pypi/index.html")
+PAGES = ("index.html", "404.html", "pypi/index.html", "investors/index.html", "developers/index.html")
 MARKER = "company domain of record"
 THIRD_PARTY = re.compile(
     r'<script[^>]+src=|<link[^>]+rel="(?:stylesheet|preconnect|preload|icon)"[^>]+href="https?://|@import\s+url\(https?://'
