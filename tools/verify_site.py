@@ -159,6 +159,19 @@ def check_mirror(root, errors):
             errors.append(f"pypi/MIRROR.json lists {rel} but pypi/{rel} is missing")
     if not re.fullmatch(r"[0-9a-f]{40}", str(meta.get("source_commit", ""))):
         errors.append("pypi/MIRROR.json: source_commit is not a full git SHA")
+    # A private canonical manifest must never be copied verbatim to a public Pages root.
+    catalog = json.loads((root / "pypi/pypi-packages.v1.json").read_text(encoding="utf-8"))
+    projection = catalog.get("public_projection")
+    if (not isinstance(projection, dict)
+            or projection.get("schema") != "szl.public-pypi-projection/v1"
+            or projection.get("source_commit") != meta.get("source_commit")
+            or not re.fullmatch(r"[0-9a-f]{64}", str(projection.get("source_manifest_sha256", "")))):
+        errors.append("pypi/pypi-packages.v1.json: public projection provenance invalid")
+    packages = catalog.get("packages")
+    if (not isinstance(packages, list)
+            or any(not isinstance(p, dict) or p.get("status") != "published" for p in packages)
+            or catalog.get("counts", {}).get("published") != len(packages)):
+        errors.append("pypi/pypi-packages.v1.json: private or incomplete public projection")
 
 
 def verify(root=ROOT):

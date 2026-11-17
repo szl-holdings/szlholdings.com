@@ -53,10 +53,13 @@ to its own addresses. Cut-over, in order:
 
 ## /pypi/ public mirror
 
-`pypi/` holds copies of the PyPI governance artifacts from the private `szl-holdings/szl-org-health` repository: the
-manifest, canonical workflow, gate and generator byte-for-byte, and the release contract (`release-path.md`) with a
-provenance comment prepended. `MIRROR.json` records the source commit and the mirror time. The mirror is refreshed by
-hand, so it can trail the source. Refresh from a checkout that can read the source:
+`pypi/` exposes a **published-only, allowlisted public projection** of the private canonical
+`szl-holdings/szl-org-health` manifest, with source commit and source-manifest SHA-256.
+Unpublished/held/internal/third-party project identities are omitted. The canonical workflow,
+gate and generator remain byte-for-byte mirrors; the release contract (`release-path.md`) has a
+provenance comment prepended. `MIRROR.json` records the source commit and mirror time. This is a
+dated source snapshot, not a claim of current PyPI version or independent attestation status.
+Refresh only from a clean checkout that can read the private canonical source:
 
 ```
 python3 tools/mirror_pypi_governance.py /path/to/szl-org-health

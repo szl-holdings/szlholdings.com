@@ -117,6 +117,21 @@ class VerifySiteTest(SiteCopyTestCase):
         self.edit("developers/index.html", "</main>", "")
         self.assert_fails("developers/index.html: unbalanced </body>")
 
+    def test_nonpublished_identity_cannot_enter_public_manifest(self):
+        import json
+        text = self.read("pypi/pypi-packages.v1.json")
+        catalog = json.loads(text)
+        catalog["packages"].append({"name": "secret-project", "status": "hold", "reason": "private"})
+        self.write("pypi/pypi-packages.v1.json", json.dumps(catalog))
+        self.assert_fails("private or incomplete public projection")
+
+    def test_public_manifest_source_binding_cannot_be_changed(self):
+        import json
+        catalog = json.loads(self.read("pypi/pypi-packages.v1.json"))
+        catalog["public_projection"]["source_commit"] = "0" * 40
+        self.write("pypi/pypi-packages.v1.json", json.dumps(catalog))
+        self.assert_fails("public projection provenance invalid")
+
 
 if __name__ == "__main__":
     unittest.main()

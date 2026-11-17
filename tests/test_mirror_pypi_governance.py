@@ -10,7 +10,6 @@ import unittest
 from sitecopy import SiteCopyTestCase
 
 SOURCES = {
-    "pypi-packages.v1.json": "governance/pypi/pypi-packages.v1.json",
     "canonical/publish-pypi.yml": "governance/pypi/canonical/publish-pypi.yml",
     "canonical/szl_pypi_release_gate.py": "governance/pypi/canonical/szl_pypi_release_gate.py",
     "canonical/gen_publish_workflow.py": "governance/pypi/canonical/gen_publish_workflow.py",
@@ -29,6 +28,14 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
             (src / rel).parent.mkdir(parents=True, exist_ok=True)
             # Bytes that a text-mode copy would mangle (CRLF, non-ASCII) prove the copy is byte-for-byte.
             (src / rel).write_bytes(f"fixture {i}\r\nnon-ascii: — é\n".encode("utf-8"))
+        manifest_path = src / "governance/pypi/pypi-packages.v1.json"
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text(json.dumps({"schema": "szl.pypi-packages.v1", "generated_at": "2026-11-16T12:00:00Z",
+            "packages": [
+                {"name": "szl-public", "repo": "szl-public", "status": "published", "pypi_version": "1.2.0",
+                 "pypi_url": "https://pypi.org/project/szl-public/", "source": "https://github.com/szl-holdings/szl-public"},
+                {"name": "private-lab", "repo": "private-lab", "status": "hold", "reason": "CONFIDENTIAL FIXTURE"},
+                {"name": "unreleased", "repo": "unreleased", "status": "queued"}]}), encoding="utf-8")
         (src / "docs").mkdir()
         (src / "docs/PYPI_RELEASE_PATH.md").write_text("# Release path\n\nfixture contract\n", encoding="utf-8")
         for cmd in (["init", "-q"], ["add", "-A"], ["commit", "-q", "-m", "fixture"]):
@@ -42,7 +49,13 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
         before_meta = json.loads(self.read("pypi/MIRROR.json"))
         r = self.run_tool("mirror_pypi_governance.py", str(src))
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
-        self.assertIn(f"mirrored {len(SOURCES) + 1} files from {sha[:12]}", r.stdout)
+        self.assertIn(f"mirrored {len(SOURCES) + 2} files from {sha[:12]}", r.stdout)
+        projected = json.loads(self.read("pypi/pypi-packages.v1.json"))
+        self.assertEqual(projected["counts"], {"published": 1, "queued": 0})
+        self.assertEqual([p["name"] for p in projected["packages"]], ["szl-public"])
+        self.assertNotIn("private-lab", self.read("pypi/pypi-packages.v1.json"))
+        self.assertNotIn("unreleased", self.read("pypi/pypi-packages.v1.json"))
+        self.assertEqual(projected["public_projection"]["source_commit"], sha)
         for dst, rel in SOURCES.items():
             self.assertEqual((self.site / "pypi" / dst).read_bytes(), (src / rel).read_bytes(), dst)
         release_path = self.read("pypi/release-path.md")
@@ -52,10 +65,12 @@ class MirrorPypiGovernanceTest(SiteCopyTestCase):
         self.assertEqual(body, "# Release path\n\nfixture contract\n")
         meta = json.loads(self.read("pypi/MIRROR.json"))
         self.assertEqual(meta["source_commit"], sha)
+        self.assertIn("published packages only", meta["note"])
+        self.assertEqual(meta["public_manifest_projection"], "szl.public-pypi-projection/v1")
         mirrored = datetime.datetime.strptime(meta["mirrored_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
             tzinfo=datetime.timezone.utc)
         self.assertLess(abs(datetime.datetime.now(datetime.timezone.utc) - mirrored), datetime.timedelta(minutes=10))
-        for key in ("schema", "source_repository", "source_visibility", "files", "note"):
+        for key in ("schema", "source_repository", "source_visibility", "files"):
             self.assertEqual(meta[key], before_meta[key], key)
 
     def test_usage_error_without_source_path(self):

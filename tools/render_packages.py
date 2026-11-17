@@ -63,7 +63,7 @@ def render(manifest, page_text):
     t = sub_once(r"Simple APIs on \d{4}-\d{2}-\d{2}", lambda _m: f"Simple APIs on {date}", t,
                  "'Simple APIs on YYYY-MM-DD' read date")
     t = sub_once(r"(Queued for first release through the same path: ).*?\.</p>",
-                 lambda mm: mm.group(1) + html.escape(", ".join(p["name"] for p in queued)) + ".</p>",
+                 lambda mm: mm.group(1) + html.escape(", ".join(p["name"] for p in queued) if queued else "none in this published-only public projection") + ".</p>",
                  t, "queued-packages sentence", flags=re.S)
     return t, len(pub), len(queued), date
 
