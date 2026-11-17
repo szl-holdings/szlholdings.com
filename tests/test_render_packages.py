@@ -77,8 +77,14 @@ class RenderPackagesTest(SiteCopyTestCase):
         self.assertIsNotNone(queued)
         self.assertIn("b-queued", queued.group(1).split(", "))
         self.assertNotIn("b-queued", names)
+        # The renderer can preview arbitrary fixture rows, but a modified
+        # manifest must NOT pass the immutable public-mirror integrity gate.
         verify = self.run_tool("verify_site.py")
-        self.assertEqual(verify.returncode, 0, verify.stdout + verify.stderr)
+        self.assertEqual(verify.returncode, 1, verify.stdout + verify.stderr)
+        self.assertIn(
+            "pypi/MIRROR.json: source_sha256 mismatch for pypi-packages.v1.json",
+            verify.stdout,
+        )
 
     def test_manifest_values_are_html_escaped(self):
         m = self.manifest()

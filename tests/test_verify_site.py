@@ -94,6 +94,24 @@ class VerifySiteTest(SiteCopyTestCase):
         self.assert_fails("pypi/MIRROR.json lists canonical/gen_publish_workflow.py but pypi/canonical/"
                           "gen_publish_workflow.py is missing")
 
+    def test_mirror_rejects_tampered_canonical_source(self):
+        path = self.site / "pypi" / "canonical" / "gen_publish_workflow.py"
+        path.write_bytes(path.read_bytes() + b"\n# modified after approval\n")
+        self.assert_fails(
+            "pypi/MIRROR.json: source_sha256 mismatch for canonical/gen_publish_workflow.py"
+        )
+
+    def test_mirror_refuses_missing_digest_coverage(self):
+        import json
+
+        path = self.site / "pypi" / "MIRROR.json"
+        record = json.loads(path.read_text(encoding="utf-8"))
+        record.pop("source_sha256", None)
+        path.write_text(json.dumps(record), encoding="utf-8")
+        self.assert_fails(
+            "pypi/MIRROR.json: source_sha256 must cover exactly copied sources"
+        )
+
     def test_public_onboarding_distinguishes_evidence_states(self):
         home = self.read("index.html")
         investor = self.read("investors/index.html")

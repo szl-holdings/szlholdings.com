@@ -2,8 +2,8 @@
   "schema": "szl.public-mirror/v1",
   "source_repository": "szl-holdings/szl-org-health",
   "source_visibility": "private",
-  "source_commit": "a2d221ae40c9fd0ab21f8821a7433e98b74d2ed0",
-  "mirrored_at": "2026-10-01T19:18:43Z",
+  "source_commit": "80944e1c526c0a9fd00bc8011b0cb9fe5c54cfba",
+  "mirrored_at": "2026-11-17T19:53:16Z",
   "files": {
     "pypi-packages.v1.json": "governance/pypi/pypi-packages.v1.json",
     "release-path.md": "docs/PYPI_RELEASE_PATH.md",
@@ -11,5 +11,11 @@
     "canonical/szl_pypi_release_gate.py": "governance/pypi/canonical/szl_pypi_release_gate.py",
     "canonical/gen_publish_workflow.py": "governance/pypi/canonical/gen_publish_workflow.py"
   },
-  "note": "Copies of the PyPI governance artifacts so that public links resolve: byte-for-byte, except release-path.md, which has a provenance comment prepended. The private repository remains the source of truth; the nightly audit there reads live PyPI and GitHub state."
+  "note": "Copies of the PyPI governance artifacts so that public links resolve: byte-for-byte, except release-path.md, which has a provenance comment prepended. The private repository remains the source of truth; the nightly audit there reads live PyPI and GitHub state.",
+  "source_sha256": {
+    "pypi-packages.v1.json": "cea9b8dd4a5b572c2617ec1c2e38d426ac9bef1a62d1570eab83b8afaa6972da",
+    "canonical/publish-pypi.yml": "385471214ab3b5b8fd7e6133d941c7746fd14e6aa4c6fa6804bbd22ddf88109b",
+    "canonical/szl_pypi_release_gate.py": "6a8e0846b73c917f422f155fa28b10abefb277f44d15b5e757e4f4780be735ad",
+    "canonical/gen_publish_workflow.py": "8ca20126c204c61738a2f3699281a1c5d56ee32779f5353e53f9bf1bac6eb56a"
+  }
 }

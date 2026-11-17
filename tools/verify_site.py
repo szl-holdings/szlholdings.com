@@ -9,6 +9,7 @@ Checks the published tree as GitHub Pages serves it (repository root, .nojekyll)
 - the package table has unique rows (at least 20) and the marker text the live probe looks for.
 """
 import datetime
+import hashlib
 import html.parser
 import json
 import pathlib
@@ -154,11 +155,29 @@ def check_sitemap(root, errors):
 
 def check_mirror(root, errors):
     meta = json.loads((root / "pypi/MIRROR.json").read_text(encoding="utf-8"))
-    for rel in meta.get("files", {}):
+    files = meta.get("files", {})
+    for rel in files:
         if not (root / "pypi" / rel).is_file():
             errors.append(f"pypi/MIRROR.json lists {rel} but pypi/{rel} is missing")
     if not re.fullmatch(r"[0-9a-f]{40}", str(meta.get("source_commit", ""))):
         errors.append("pypi/MIRROR.json: source_commit is not a full git SHA")
+
+    # The release-path document intentionally carries a provenance preamble.
+    # Every other canonical mirror must be a byte-for-byte immutable source
+    # blob, pinned and checked by its sha256 digest.
+    expected = set(files) - {"release-path.md"}
+    digests = meta.get("source_sha256")
+    if type(digests) is not dict or set(digests) != expected:
+        errors.append("pypi/MIRROR.json: source_sha256 must cover exactly copied sources")
+        return
+    for rel in sorted(expected):
+        digest = digests[rel]
+        if type(digest) is not str or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            errors.append(f"pypi/MIRROR.json: source_sha256 invalid for {rel}")
+        else:
+            path = root / "pypi" / rel
+            if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                errors.append(f"pypi/MIRROR.json: source_sha256 mismatch for {rel}")
 
 
 def verify(root=ROOT):
